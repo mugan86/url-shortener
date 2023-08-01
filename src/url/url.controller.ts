@@ -25,4 +25,5 @@ export class UrlController {
 
     return res.redirect(url.longUrl);
   }
+  
 }
