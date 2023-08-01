@@ -4,6 +4,4 @@ export class ShortenURLDto {
   @IsString()
   @IsNotEmpty()
   longUrl: string;
-
-  shortUrl?: string;
 }

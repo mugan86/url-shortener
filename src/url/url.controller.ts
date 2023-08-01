@@ -4,13 +4,25 @@ import { Body, Controller, Get, Param, Post, Res } from '@nestjs/common';
 
 @Controller('url')
 export class UrlController {
-    constructor(private service: UrlService) {}
+  constructor(private service: UrlService) { }
 
-    @Post('shorten')
-    shortenUrl(
-      @Body()
-      url: ShortenURLDto,
-    ) {
-      return this.service.shortenUrl(url);
-    }
+  @Post('shorten')
+  shortenUrl(
+    @Body()
+    url: ShortenURLDto,
+  ) {
+    return this.service.shortenUrl(url);
+  }
+
+  @Get(':code')
+  async redirect(
+    @Res() res,
+    @Param('code')
+    code: string,
+  ) {
+    console.log(code)
+    const url = await this.service.redirect(code);
+
+    return res.redirect(url.longUrl);
+  }
 }
