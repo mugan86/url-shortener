@@ -1,14 +1,14 @@
 import { UrlService } from './url.service';
-import { ShortenURLDto } from './url.dto';
-import { Body, Controller, Get, Param, Post, Res } from '@nestjs/common';
+import { PaginationParams, ShortenURLDto } from './url.dto';
+import { Body, Controller, Get, Param, Post, Query, Res } from '@nestjs/common';
 
 @Controller('url')
 export class UrlController {
   constructor(private service: UrlService) {}
 
   @Get('list')
-  async getAll() {
-    return await this.service.findAll();
+  async getAll(@Query() { page, items }: PaginationParams) {
+    return await this.service.findAll(page, items);
   }
 
   @Get(':code')
