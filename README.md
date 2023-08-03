@@ -74,4 +74,5 @@ Nest is [MIT licensed](LICENSE).
 
 ## Reference
 
-https://es.linux-console.net/?p=6523#gsc.tab=0
+* Shortener: https://es.linux-console.net/?p=6523#gsc.tab=0
+* Pagination: https://wanago.io/2021/09/13/api-nestjs-pagination-mongodb-mongoose/

@@ -53,4 +53,10 @@ export class UrlService {
       throw new NotFoundException('Resource Not Found');
     }
   }
+
+  async findAll() {
+    return this.urlModel
+      .find()
+      .sort({ _id: 1 });
+  }
 }
