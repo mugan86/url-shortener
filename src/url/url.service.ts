@@ -1,4 +1,9 @@
-import { Injectable, BadRequestException, UnprocessableEntityException, NotFoundException } from '@nestjs/common';
+import {
+  Injectable,
+  BadRequestException,
+  UnprocessableEntityException,
+  NotFoundException,
+} from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { ShortenURLDto } from './url.dto';
@@ -8,10 +13,10 @@ import { Url, UrlDocument } from './url.schema';
 
 @Injectable()
 export class UrlService {
-  constructor(@InjectModel(Url.name) private urlModel: Model<UrlDocument>) { }
+  constructor(@InjectModel(Url.name) private urlModel: Model<UrlDocument>) {}
 
   async shortenUrl(url: ShortenURLDto) {
-    const { longUrl } = url;
+    const { longUrl, title, description } = url;
 
     // checks if longurl is a valid URL
     if (!isURL(longUrl)) {
@@ -19,7 +24,6 @@ export class UrlService {
     }
 
     const urlCode = nanoid(10);
-    const baseURL = 'http://localhost:3000';
 
     try {
       // Check if the longUrl already exists in the database
@@ -28,11 +32,8 @@ export class UrlService {
       // Return existing URL if it already exists
       if (existingUrl) return existingUrl;
 
-      // If it does not exist, create a new short URL with the combination of the base + urlCode
-      const shortUrl = `${baseURL}/url/${urlCode}`;
-
       // Create and save the new URL record in the database
-      const newUrl = new this.urlModel({ longUrl, shortUrl, urlCode });
+      const newUrl = new this.urlModel({ longUrl, urlCode, title, description });
       const savedUrl = await newUrl.save();
 
       return savedUrl;
@@ -53,8 +54,3 @@ export class UrlService {
     }
   }
 }
-
-
-
-
-

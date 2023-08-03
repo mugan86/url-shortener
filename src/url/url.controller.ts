@@ -20,10 +20,8 @@ export class UrlController {
     @Param('code')
     code: string,
   ) {
-    console.log(code)
     const url = await this.service.redirect(code);
-
-    return res.redirect(url.longUrl);
+    return res.redirect(`${url.longUrl}`);
   }
   
 }
