@@ -76,3 +76,7 @@ Nest is [MIT licensed](LICENSE).
 
 * Shortener: https://es.linux-console.net/?p=6523#gsc.tab=0
 * Pagination: https://wanago.io/2021/09/13/api-nestjs-pagination-mongodb-mongoose/
+
+## Production URL
+
+* [Shortener URLs List](https://shorten-up.vercel.app/url/list)
