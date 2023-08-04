@@ -10,10 +10,11 @@ import { ShortenURLDto } from './url.dto';
 import { nanoid } from 'nanoid';
 import { isURL } from 'class-validator';
 import { Url, UrlDocument } from './url.schema';
+import { AppService } from 'src/app.service';
 
 @Injectable()
 export class UrlService {
-  constructor(@InjectModel(Url.name) private urlModel: Model<UrlDocument>) { }
+  constructor(@InjectModel(Url.name) private urlModel: Model<UrlDocument>, private appService: AppService) { }
 
   async shortenUrl(url: ShortenURLDto) {
     const { longUrl, title, description } = url;
@@ -53,35 +54,9 @@ export class UrlService {
       throw new NotFoundException('Resource Not Found');
     }
   }
-
-  private async pagination(
-    model: Model<unknown>,
-    page: number = 1,
-    itemsPage: number = 20,
-    filter: object = {}
-  ) {
-    // Check items per page
-    if (itemsPage < 1 || itemsPage > 20) {
-      itemsPage = 20;
-    }
-    if (page < 1) {
-      page = 1;
-    }
-    const total = await model.count();
-    const pages = Math.ceil(total / itemsPage);
-    return {
-      skip: (page - 1) * itemsPage,
-      itemsPage,
-      total,
-      pages: {
-        total: pages,
-        current: page
-      }
-    };
-  }
-
+  
   async findAll(page = 1, itemsPerPage?: number) {
-    const pageOptions = await this.pagination(this.urlModel, page, itemsPerPage || 20);
+    const pageOptions = await this.appService.pagination(this.urlModel, page, itemsPerPage || 20);
 
     return {
       pagination: pageOptions, results: await this.urlModel
