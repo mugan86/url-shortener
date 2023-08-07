@@ -20,6 +20,9 @@ export class Url {
 
     @Prop()
     description: string;
+
+    @Prop()
+    keywords: string[]
 }
 
 export const UrlSchema = SchemaFactory.createForClass(Url); 

@@ -2,11 +2,11 @@ import { UrlService } from './url.service';
 import { PaginationParams, ShortenURLDto } from './url.dto';
 import { Body, Controller, Get, Param, Post, Query, Res } from '@nestjs/common';
 
-@Controller('url')
+@Controller()
 export class UrlController {
   constructor(private service: UrlService) {}
 
-  @Get('list')
+  @Get('urls')
   async getAll(@Query() { page, items }: PaginationParams) {
     return await this.service.findAll(page, items);
   }
@@ -21,7 +21,7 @@ export class UrlController {
     return res.redirect(`${url.longUrl}`);
   }
 
-  @Post('shorten')
+  @Post('shorten-url')
   shortenUrl(
     @Body()
     url: ShortenURLDto

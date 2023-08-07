@@ -1,4 +1,12 @@
-import { IsString, IsNotEmpty, IsOptional, IsNumber, Min } from 'class-validator';
+import {
+  IsString,
+  IsNotEmpty,
+  IsOptional,
+  IsNumber,
+  Min,
+  IsArray,
+  ArrayMinSize,
+} from 'class-validator';
 import { Type } from 'class-transformer';
 
 export class ShortenURLDto {
@@ -13,8 +21,12 @@ export class ShortenURLDto {
   @IsString()
   @IsNotEmpty()
   description: string;
-}
 
+  @IsNotEmpty()
+  @IsArray()
+  @ArrayMinSize(2)
+  keywords: string[];
+}
 
 export class PaginationParams {
   @IsOptional()

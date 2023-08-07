@@ -17,7 +17,7 @@ export class UrlService {
   constructor(@InjectModel(Url.name) private urlModel: Model<UrlDocument>, private appService: AppService) { }
 
   async shortenUrl(url: ShortenURLDto) {
-    const { longUrl, title, description } = url;
+    const { longUrl, title, description, keywords } = url;
 
     // checks if longurl is a valid URL
     if (!isURL(longUrl)) {
@@ -34,7 +34,7 @@ export class UrlService {
       if (existingUrl) return existingUrl;
 
       // Create and save the new URL record in the database
-      const newUrl = new this.urlModel({ longUrl, urlCode, title, description });
+      const newUrl = new this.urlModel({ longUrl, urlCode, title, description, keywords });
       const savedUrl = await newUrl.save();
 
       return savedUrl;
